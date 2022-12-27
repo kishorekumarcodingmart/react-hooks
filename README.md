@@ -1,70 +1,160 @@
-# Getting Started with Create React App
+React Hooks
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+----------------------------------------------------------------------------
 
-## Available Scripts
+1.useState
 
-In the project directory, you can run:
+What is State?
+	The state is a built-in React object that is used to contain data or information about the component. 
 
-### `yarn start`
+useState use cases:
+	a.State management
+	b.Conditional rendering
+	c.Get API data and store it in state
+	
+Syntax:
+	const [state, setState] = useState(initalValue);
+	
+----------------------------------------------------------------------------
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2.useEffect
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+What is useEffect() in React?
+	The useEffect Hook allows you to perform side effects in your components. Side effects are: fetching data, directly updating the DOM, and timers.
+	
+Syntax:
+	useEffect(()=>{},[])
 
-### `yarn test`
+----------------------------------------------------------------------------
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3.Why useContext?
+	React Context is a way to manage state globally. It can be used together with the useState Hook to share state between deeply nested components more easily than passing the props down manually to each level.
+	
+Steps:
+	a.Create Context
+	b.Context Provider
+	c.Fetch Value
+	
+Syntax:
+	export const UserContext = createContext()
+	
+	<UserContext.Provider value={"Kishore"}>
+        	<Child />
+      	</UserContext.Provider>
+      	
+      	(import { UserContext } from "./App";) => import this context in need File
+      	
+      	const text = useContext(Context);
+      	
+----------------------------------------------------------------------------
 
-### `yarn build`
+4.useReducer
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+What is useReducer?
+	 Reducers are the pure functions that contain the logic and calculation that needed to be performed on the state.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Why do need useReducer?  
+	 Used for complex state manipulations and state transitions.  
+	 
+Syntax: 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+	const INITIAL_STATE = {
+	    loading : false,
+	    data : {},
+	    error : false
+	}
 
-### `yarn eject`
+	const reducerFunction = (state, action) => {
+	    switch (action.type){
+		case "FETCH_START":
+		    return {
+		        loading : true,
+		        data : {},
+		        error : false
+		    }
+		case "FETCH_SUCCESS":
+		    return {
+		        ...state,
+		        loading : false,
+		        data : action.payload
+		    }
+		case "FETCH_ERROR":
+		    return {
+		        loading : false,
+		        data : {},
+		        error : true
+		    }
+		default:
+		    return state
+	    }
+	}
+	
+	
+	const [state, dispatch] = useReducer(reducerFunction, INITIAL_STATE)
+	
+	dispatch({type : "FETCH_START"}) => use in particular changes
+ 
+ ----------------------------------------------------------------------------
+ 
+ 5. useCallback
+ 
+What is useCallback?
+ 	useCallback is a hook that will return a memoized version of the callback function that only changes if one of the dependencies has changed.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+UseCase of useCallback:
+	a.To prevent unnecessary renders 
+	
+Syntax:
+	useCallback(()=>{},[])
+	
+----------------------------------------------------------------------------
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+6.useMemo
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+	a.Lets you to cache the result of a calulation between re-render
+	b.Returns a memoized values
+	c.Function should Pure Function
+	
+Syntax:
+	useMemo(()=>{},[])
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+----------------------------------------------------------------------------
 
-## Learn More
+7.useRef
+	The useRef Hook allows you to persist values between renders. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Usecase:	
+	a.It can be used to store a mutable value that does not cause a re-render when updated. 
+	b.It can be used to access a DOM element directly.
+	
+Syntax:
+	const Ref = useRef()
+	
+	To Access => Ref.current
+	
+----------------------------------------------------------------------------
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+8.useImperativeHandle
+	useImperativeHandle allows you to pass values and functions from a Child component back up to a Parent using a ref.
+	
+	=> useImperativeHandle should be used with forwardRef.
 
-### Code Splitting
+Usage
+	Exposing a custom ref handle to the parent component
+	Exposing your own imperative methods
+	
+Syntax:
+	useImperativeHandle(ref,()=>{},[])
+	
+	
+----------------------------------------------------------------------------
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+9.useLayoutEffect => synchronously re-render
+	useLayoutEffect is a version of useEffect that fires before the browser repaints the screen.
+	
+Syntax:
+	useLayoutEffect(()=>{},[])
+	
+----------------------------------------------------------------------------	
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+10.
